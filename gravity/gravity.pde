@@ -4,13 +4,17 @@
 
 
 ArrayList<Ball> balls = new ArrayList() ;
+Logic logic = new Logic();
+int ballCount = 2;
 
 void setup() {
-  size(700, 500);
+  size(300, 700);
   
-  for (int i = 0;i< 12; i++) {
-    balls.add(new Ball(random(20,width), random(20,height), 20));
+  for (int i = 0;i< ballCount; i++) {
+    balls.add(new Ball(random(20,width), random(20,30), 20));
   }
+  
+  //frameRate(10);
   
 }
 
@@ -18,54 +22,8 @@ void draw() {
   background(51);
 
   for (Ball b : balls) {
-    b.update();
+    logic.apply(b);
     b.draw();
   }
   
-}
-
-
-
-
-
-
-
-class Ball {
-  PVector position;
-  PVector velocity;
-  PVector gravity ;
-  int id;
-
-  float radius, m;
-
-  Ball(float x, float y, float r_) {
-    position = new PVector(x, y);
-    velocity = new PVector(0,2.1);
-    gravity = new PVector(0,0.94);
-    
-    radius = r_;
-    m = radius*.1;
-    id = int(random(200));
-  }
-  
-  int getId() {
-    return this.id;
-  }
-
-  void update() {
-    position.add(velocity);
-    velocity.add(gravity);
-    
-    if (position.y > height - radius) {
-      position.y = height -radius;      
-    }
-  }
-
-  void draw() {
-    noStroke();
-    fill(204);
-    ellipse(position.x, position.y, radius*2, radius*2);
-    fill(0);
-    text("y"+int(position.y),position.x,position.y);
-  }
 }
