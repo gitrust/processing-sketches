@@ -9,13 +9,12 @@ int ballCount = 2;
 
 void setup() {
   size(300, 700);
-  
-  for (int i = 0;i< ballCount; i++) {
-    balls.add(new Ball(random(20,width), random(20,30), 20));
+
+  for (int i = 0; i< ballCount; i++) {
+    balls.add(new Ball(random(20, width), random(20, 30), 20));
   }
-  
+
   //frameRate(10);
-  
 }
 
 void draw() {
@@ -25,5 +24,4 @@ void draw() {
     logic.apply(b);
     b.draw();
   }
-  
 }
