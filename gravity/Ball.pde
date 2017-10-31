@@ -13,8 +13,8 @@ class Ball {
   Ball(float x, float y, float r_) {
     position = new PVector(x, y);
     velocity = new PVector(0, 1.1);
-    gravity = new PVector(0, 0.3);
-    friction = 0.5;
+    gravity = new PVector(0, 0.8);
+    friction = 0.4;
 
     radius = r_;
     m = radius*.1;

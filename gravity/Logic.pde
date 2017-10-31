@@ -24,7 +24,7 @@ class Logic {
       b.velocity.y *= -(b.friction);
       
       // stop ball moving
-      if (abs(b.velocity.y) < 0.9) {
+      if (abs(b.velocity.y) < 2) {
          b.rest = true;
       }
     } 
