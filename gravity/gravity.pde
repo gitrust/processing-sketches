@@ -5,14 +5,15 @@
 
 ArrayList<Ball> balls = new ArrayList() ;
 Logic logic = new Logic();
-int ballCount = 2;
+int maxBalls = 1;
+int id = 1;
 
 void setup() {
   size(300, 700);
 
-  for (int i = 0; i< ballCount; i++) {
-    balls.add(new Ball(random(20, width), random(20, 30), 20));
-  }
+
+  // balls.add(new Ball(100,100, 20));
+  // balls.add(new Ball(100,20, 20));
 
   //frameRate(10);
 }
@@ -21,7 +22,15 @@ void draw() {
   background(51);
 
   for (Ball b : balls) {
-    logic.apply(b);
+    logic.apply(b, balls);
+
     b.draw();
+  }
+
+  // put one ball each 50 frame into scene
+  if (maxBalls > balls.size()) {
+    if (frameCount % 50 == 0) {
+      balls.add(new Ball(100, random(20, 30), 20,id++));
+    }
   }
 }
