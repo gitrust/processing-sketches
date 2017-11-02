@@ -5,7 +5,7 @@
 
 ArrayList<Ball> balls = new ArrayList() ;
 Logic logic = new Logic();
-int maxBalls = 1;
+int maxBalls = 3;
 int id = 1;
 
 void setup() {

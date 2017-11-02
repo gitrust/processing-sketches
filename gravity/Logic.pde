@@ -8,16 +8,16 @@ class Logic {
 
   void apply(Ball b, ArrayList<Ball> balls) {
     if (b.rest) {
-      //return;
+      return;
     }
 
     b.position.add(b.velocity);
     b.velocity.add(b.gravity);
 
-    
+
 
     collision(b, balls);
-    
+
     borderCollision(b);
   }
 
@@ -36,7 +36,7 @@ class Logic {
         b.rest = true;
       }
     }
-    
+
     // hit top
     if (b.position.y < b.radius) {
       b.position.y = b.radius;
@@ -59,7 +59,7 @@ class Logic {
     for (Ball ball : balls) {
       // skip same ball
       if (ball.id != b.id && ball.intersects(b)) {
-        collisionAlg2(b, ball);
+        collisionAlg3(b, ball);
       }
     }
   }
@@ -83,6 +83,8 @@ class Logic {
 
   // http://ericleong.me/research/circle-circle/
   void collisionAlg2(Ball b, Ball b2) {
+    // PROBLEM: sticking
+    
     float cx1 = b.position.x;
     float cy1 = b.position.y;
 
@@ -90,16 +92,18 @@ class Logic {
     float cy2 = b2.position.y;
 
 
-    float d = dist(b.position.x,b.position.y,b2.position.x,b2.position.y);
+    float d = dist(b.position.x, b.position.y, b2.position.x, b2.position.y);
     // Find the norm of the vector from the point of collision for the first circle and the point of collision of the second circle
     float nx = (cx2 - cx1) / d; 
     float ny = (cy2 - cy1) / d; 
     // Calculate the p-value that takes into account the velocities of both circles.
     float p = 2 * (b.velocity.x * nx + b.velocity.y * ny - b2.velocity.x * nx - b2.velocity.y * ny) / (b.mass + b2.mass); 
+
     // Calculate the final velocity of each circle using each p-value. 
     // Note that each resultant is just the opposite sign with each variable replaced with the corresponding variable
     float vx1 = b.velocity.x - p * b.mass * nx; 
     float vy1 = b.velocity.y - p * b.mass * ny; 
+
     float vx2 = b2.velocity.x + p * b2.mass * nx; 
     float vy2 = b2.velocity.y + p * b2.mass * ny;
 
@@ -107,5 +111,19 @@ class Logic {
     b.velocity.y = vy1;
     b2.velocity.x = vx2;
     b2.velocity.y = vy2;
+  }
+
+  void collisionAlg3(Ball b1, Ball b2) {
+    //http://gamedev.tutsplus.com/tutob1.rials/implementation/when-worlds-collide-simulating-circle-circle-collisions/
+    
+    float axvel = (b1.velocity.x * (b1.mass - b2.mass) + (2 * b2.mass * b2.velocity.x)) / (b1.mass + b2.mass);
+    float ayvel = (b1.velocity.y * (b1.mass - b2.mass) + (2 * b2.mass * b2.velocity.y)) / (b1.mass + b2.mass);
+    b2.velocity.x = (b2.velocity.x * (b2.mass - b1.mass) + (2 * b1.mass * b1.velocity.x)) / (b1.mass + b2.mass);
+    b2.velocity.y = (b2.velocity.y * (b2.mass - b1.mass) + (2 * b1.mass * b1.velocity.y)) / (b1.mass + b2.mass);
+    b1.velocity.x = axvel;
+    b1.velocity.y = ayvel;
+    
+    //b1.x = b1.x + b1.velocity.x;
+    //b1.y = b1.y + b1.velocity.y;
   }
 }
