@@ -14,31 +14,31 @@ class Logic {
     b.position.add(b.velocity);
     b.velocity.add(b.gravity);
 
-
-
     collision(b, balls);
 
     borderCollision(b);
+
+
   }
 
   void borderCollision(Ball b) {
     // hit the ground
-    if (int(b.position.y) > height - b.radius) {
+    if (int(b.position.y) > height - b.radius ) {
       // reset position of ball
       b.position.y = height - b.radius;
 
       // add friction
-      // bounce
+      // bouncing
       b.velocity.y *= -(b.friction);
 
       // stop ball moving
-      if (abs(b.velocity.y) < 2) {
+      if (abs(b.velocity.y) < 2 && !b.intersection) {
         b.rest = true;
       }
     }
 
     // hit top
-    if (b.position.y < b.radius) {
+    if (b.position.y < b.radius ) {
       b.position.y = b.radius;
       b.velocity.y *= -(b.friction);
     } 
@@ -48,9 +48,15 @@ class Logic {
       b.velocity.x *= -(b.friction);
     }
     // left side
-    if (b.position.x < b.radius) {
+    if (b.position.x < b.radius ) {
       b.position.x = b.radius;
       b.velocity.x *= -(b.friction);
+    }
+  }
+
+  void fixSticking(Ball b1, Ball b2) {
+    if (b1.intersects(b2) && b1.position.y > 600) {
+      b1.velocity.y *= b1.friction;
     }
   }
 
@@ -59,9 +65,21 @@ class Logic {
     for (Ball ball : balls) {
       // skip same ball
       if (ball.id != b.id && ball.intersects(b)) {
-        collisionAlg3(b, ball);
+        float dotProduct = calcDotProduct(b, ball);
+        if (dotProduct <= 0) {
+          collisionAlg3(b, ball);
+        }
       }
     }
+  }
+
+  float calcDotProduct(Ball b1, Ball b2) {
+    // check the sign of (v1 - v2).dotProduct(p1 - p2), and see if it is positive 
+    // (then it means you objects are already moving away from each other 
+    // and should not have a response applied to them).
+    PVector v = PVector.sub(b1.velocity, b2.velocity);
+    PVector p = PVector.sub(b1.position, b2.position);
+    return PVector.dot(v, p);
   }
 
   void collisionAlg1(Ball b, Ball b2) {
@@ -84,7 +102,7 @@ class Logic {
   // http://ericleong.me/research/circle-circle/
   void collisionAlg2(Ball b, Ball b2) {
     // PROBLEM: sticking
-    
+
     float cx1 = b.position.x;
     float cy1 = b.position.y;
 
@@ -115,15 +133,19 @@ class Logic {
 
   void collisionAlg3(Ball b1, Ball b2) {
     //http://gamedev.tutsplus.com/tutob1.rials/implementation/when-worlds-collide-simulating-circle-circle-collisions/
-    
+
     float axvel = (b1.velocity.x * (b1.mass - b2.mass) + (2 * b2.mass * b2.velocity.x)) / (b1.mass + b2.mass);
     float ayvel = (b1.velocity.y * (b1.mass - b2.mass) + (2 * b2.mass * b2.velocity.y)) / (b1.mass + b2.mass);
     b2.velocity.x = (b2.velocity.x * (b2.mass - b1.mass) + (2 * b1.mass * b1.velocity.x)) / (b1.mass + b2.mass);
     b2.velocity.y = (b2.velocity.y * (b2.mass - b1.mass) + (2 * b1.mass * b1.velocity.y)) / (b1.mass + b2.mass);
     b1.velocity.x = axvel;
     b1.velocity.y = ayvel;
-    
-    //b1.x = b1.x + b1.velocity.x;
-    //b1.y = b1.y + b1.velocity.y;
   }
+
+  // sticking:
+  // What happens is, 
+  // - the objects intersect
+  // - The velocity is 'reversed' through the response. The objects move away from each other.
+  // - the objects are still stuck next frame.
+  // - The velocity is 'reversed' again. That makes the objects move towards each other.
 }

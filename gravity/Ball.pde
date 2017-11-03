@@ -9,6 +9,7 @@ class Ball {
   boolean rest = false;
   int ballColor = 255;
   float mass;
+  boolean intersection;
 
   float radius, m;
 
@@ -16,24 +17,18 @@ class Ball {
     this.id = id;
     position = new PVector(x, y);
     velocity = new PVector(random(25), random(25));
-    gravity = new PVector(0, 0.8);
+    gravity = new PVector(0, 0.9);
     friction = 0.8;
 
     radius = r_;
-    mass = radius*.1;
-    id = int(random(28888));
+    mass = radius*.2;
   }
 
-  boolean intersects(Ball b) {
-    boolean i = dist(position.x, position.y, b.position.x, b.position.y) < (radius * 2 +0.3); 
-    if (i) {
-      ballColor = 100;
-      b.ballColor = 100;
-    } else { 
-      ballColor = 255;
-      b.ballColor = 255;
-    }
-    return i;
+  // check intersection and remember value
+  boolean intersects(Ball b) {    
+    this.intersection = dist(position.x, position.y, b.position.x, b.position.y) < (radius * 2 + 0.5 );
+    b.intersection= this.intersection;
+    return this.intersection;
   }
 
   int getId() {
@@ -44,7 +39,7 @@ class Ball {
     noStroke();
     fill(ballColor);
     ellipse(position.x, position.y, radius*2, radius*2);
-    
+
     fill(0);
     text(""+this.id, position.x-3, position.y);
   }
