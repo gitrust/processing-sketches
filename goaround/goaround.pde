@@ -26,19 +26,16 @@ boolean scatter = true;
 boolean resetbackground = true;
 boolean stats = false;
 
-void setup() {  // this is run once.   
+void setup() { 
     
     // set the background color
     background(244);
     
     // canvas size (Integers only, please.)
     size(500, 500); 
-      
-    // smooth edges
-    //smooth();
     
     // limit the number of frames per second
-    frameRate(20);
+   // frameRate(30);
     
     // set the width of the line. 
     strokeWeight(int(width*0.08));
@@ -46,7 +43,8 @@ void setup() {  // this is run once.
     fill(153);
 } 
 
-void draw() {  // this is run repeatedly.  
+void draw() {  
+	// this is run repeatedly.  
     // reset speed and background color
     if (speed > speedlimit) {
        if (resetbackground)  background(0);
@@ -99,7 +97,6 @@ int darker(int c) {
 }
 
 void clockwise() {
-   // rechtsrum
   if ( x < width &&  y ==0 ) {
     c = 'a';
     x = x + speed;
