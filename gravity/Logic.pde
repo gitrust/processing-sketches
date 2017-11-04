@@ -1,5 +1,5 @@
 
-
+// time based collision detection
 class Logic {  
 
 
@@ -8,7 +8,7 @@ class Logic {
 
   void apply(Ball b, ArrayList<Ball> balls) {
     if (b.rest) {
-      return;
+      //return;
     }
 
     b.position.add(b.velocity);
