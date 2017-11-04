@@ -1,43 +1,41 @@
 
-boolean active = true;
+// drawline.pde
+//
+// Draws a line from center around a circle path with descent stroke color
 
-int angle = 0;
+int angle = 0, c = 0, s = 1;
+float radius = 180;
 
-color[] colors = {#e05633, #f7e04a, #ffffff};
-int i=0;
-color d = colors[i];
 
 void setup() {
   background(0);
   size(400, 400);
-  strokeWeight(3);
-  //frameRate(40);
+  strokeWeight(6);
+  smooth();
 }
 
 void draw() {
 
-  stroke(random(255));
-  float radius = random(20, 190);
+  stroke(c);
   float x = cos(radians(angle)) * radius; 
   float y = sin(radians(angle)) * radius;
   line(width/2, height/2, x + width/2, y + height/2);
 
-  if (active) {
-    angle++;
-  }
+  angle++;
+  c = c + s;
 
   if (angle > 360) {
     angle  = 0;
-    d = colors[i++];
-    println(""+i);
   }
 
-  if (i > 2) i=0;
+  // descent gradient from 0 to 255 and back
+  if (c > 254 || c < 1) {
+    s = s*-1;
+  }
 }
 
 void keyPressed() {
   if (key == 'j') {
-    if (active) active=false;
-    else active=true;
+    c=+5;
   }
 }
