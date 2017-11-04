@@ -10,11 +10,15 @@ int id = 1;
 boolean f = true;
 
 void setup() {
-  size(300, 700);
+  size(200, 700);
+  smooth();
 }
 
 void draw() {
   background(51);
+  
+  fill(255);
+  text("Press 'b'",width/2-40,height/2);
 
   for (Ball b : balls) {
     logic.apply(b, balls);
