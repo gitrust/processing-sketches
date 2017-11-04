@@ -16,23 +16,23 @@ void setup() {
 
 void draw() {
 
-  stroke(d);
-  float radius = random(20, 180);
+  stroke(random(255));
+  float radius = random(20, 190);
   float x = cos(radians(angle)) * radius; 
   float y = sin(radians(angle)) * radius;
-  line(width/2, height/2, x+width/2, y+height/2);
+  line(width/2, height/2, x + width/2, y + height/2);
 
   if (active) {
     angle++;
   }
 
-
   if (angle > 360) {
     angle  = 0;
-    d=colors[++i];
+    d = colors[i++];
+    println(""+i);
   }
 
-  if (i>0)i=0;
+  if (i > 2) i=0;
 }
 
 void keyPressed() {
