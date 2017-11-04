@@ -7,7 +7,7 @@ class Ball {
   float friction;
   int id;
   boolean rest = false;
-  int ballColor = 255;
+  int ballColor = 250;
   float mass;
   boolean intersection;
 
@@ -18,7 +18,7 @@ class Ball {
     position = new PVector(x, y);
     velocity = new PVector(random(25), random(25));
     gravity = new PVector(0, 0.9);
-    friction = 0.8;
+    friction = 0.5;
 
     radius = r_;
     mass = radius*.2;
@@ -36,10 +36,17 @@ class Ball {
   }
 
   void draw() {
+    
     noStroke();
-    fill(ballColor);
+    // ball
+    fill(200);
     ellipse(position.x, position.y, radius*2, radius*2);
+    
+    // shine
+    fill(ballColor);
+    ellipse(position.x+10, position.y-10, radius/2-2, radius/2-2);
 
+    // number
     fill(0);
     text(""+this.id, position.x-3, position.y);
   }
