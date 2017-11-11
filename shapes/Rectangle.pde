@@ -13,4 +13,8 @@ class Rectangle extends Shape {
   void draw() {
     rect(getX(), getY(), w, h);
   }
+  
+  boolean contains(float x, float y) {
+    return getX() < x && (getX()+w) > x && getY() < y && (getY()+h) > y;
+  }
 }
