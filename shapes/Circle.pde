@@ -8,6 +8,17 @@ class Circle extends Shape {
   }
 
   void draw() {
+    stroke(getColor());
     ellipse(getX(), getY(), diameter, diameter);
+  }
+
+  boolean contains(float x, float y) {
+    float disX = getX() - x;
+    float disY = getY() - y;
+    if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
