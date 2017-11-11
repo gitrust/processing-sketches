@@ -64,7 +64,7 @@ class Controller {
         }
 
         // move only selected 
-        if (modes.isSelect() && s.isSelected()) {
+        if ((modes.isSelect() || modes.isAttach()) && s.isSelected()) {
           s.move(this.mX, this.mY);
         }
       } else {
