@@ -6,7 +6,7 @@ class Modes {
   int ADDNEW = 1;
   int SELECT= 2;
   int MOVING = 21;
-  int mode = BASE;
+  int mode = ADDNEW;
   char lastkey = ' ';
 
   public void setKey(char key) {
@@ -35,23 +35,16 @@ class Modes {
   }
 
   public String getModeText() {
-    if (isSelect()) {
-      return "SELECT";
-    } else if (isAttach()) {
-      return "ADD";
-    } else if (isMoving()) {
-      return "SELECT - > MOVING";
-    }
-    return "BASE";
+    return "s = SELECT, a = ADD";
   }
 
   public String getModeHelp() {
     if (isSelect()) {
-      return "use mouse to select and move shapes";
+      return "SELECT: use mouse to select and move shapes";
     } else if (isAttach()) {
-      return "c=Circle,r=Rect";
+      return "ADD: c=Circle,r=Rect";
     } else if (isMoving()) {
-       return "use mouse to move shape"; 
+       return "MOVE: use mouse to move shape"; 
     }
     return "use keys: s=SELECT,a=ADD";
   }

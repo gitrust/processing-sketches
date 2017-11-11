@@ -15,6 +15,6 @@ class Rectangle extends Shape {
   }
   
   boolean contains(float x, float y) {
-    return getX() < x && (getX()+w) > x && getY() < y && (getY()+h) > y;
+    return getX() <= x && (getX()+w) >= x && getY() <= y && (getY()+h) >= y;
   }
 }
