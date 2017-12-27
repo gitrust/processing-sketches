@@ -2,6 +2,8 @@
 
 // balls with gravity and collision detection
 
+// https://airesearch.de/web_articles/particle_simulation/
+// https://www.openprocessing.org/sketch/849#
 
 ArrayList<Ball> balls = new ArrayList() ;
 Logic logic = new Logic();
@@ -27,11 +29,18 @@ void draw() {
   }
 }
 
+void reset() {
+   balls = new ArrayList();
+   id=0;
+   
+}
+
 void keyPressed() {
   if (key == 'b') {
     if (balls.size() < max)
       balls.add(new Ball(100, random(20, 30), 20, id++));
   }
+  if (key == 'r') reset();
 
   if (key == 'd') {
     if (f) {
