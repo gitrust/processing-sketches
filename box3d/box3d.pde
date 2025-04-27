@@ -8,7 +8,7 @@ float max_height = 60;
 float[] heights;
 
 void setup() {
-  size(640,560,P3D);
+  size(640,400,P3D);
   
   heights = new float[boxes_x*boxes_z];
   for (int i =0;i<heights.length;i++) {
@@ -24,6 +24,7 @@ void draw() {
   
   createBoxArea();
   camUpd();
+  saveFrame("images/image-####.png");
 }
 
 void camUpd(){
