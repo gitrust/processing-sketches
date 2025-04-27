@@ -12,7 +12,7 @@ int id = 1;
 boolean f = true;
 
 void setup() {
-  size(200, 700);
+  size(400, 300);
   smooth();
 }
 
@@ -27,6 +27,7 @@ void draw() {
 
     b.draw();
   }
+  saveFrame("images/gravity-####.png");
 }
 
 void reset() {
